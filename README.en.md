@@ -2,6 +2,7 @@
 
 
 
+
 # readme-translation
 
 Workflow for automatically translating `README.md` into English (or any other language supported by DeepL) using the DeepL API.
@@ -46,17 +47,17 @@ jobs:
 
 ## option
 
-| Input | Required | Default | Description
+| input | indispensable | default | Description. |
 |---|---|---|---|
-| `deepl_api_key` | **Yes** | - | DeepL API key. Save it in the repository secret. 
-| `input_file` | no | `README.md` | Path of the source file. | no
-| `output_file` | no | `README.en.md` | Output file path of the translation result. | no | `README.en.md` | output file path of translation results.
-| `source_lang` | No | `JA` | Language code of the source language (`JA`, `ZH`, `DE`, etc.). If an empty string is specified, DeepL will auto-detect it. | no | no
-| `target_lang` | No | `EN-US` | Language code of the target language (`EN-US`, `EN-GB`, `FR`, etc.). | No
-| `commit_changes` | No | `true` | Whether to autocommit and push translation files. | no
-| `commit_message` | no | `docs: update translated README (auto-translated)` | Message on auto-commit. | no
-| `commit_user_name` | No | `github-actions[bot]` | The Git `user.name` to use for automatic commits. | no
-| `commit_user_email` | No | `github-actions[bot]@users.noreply.github.com` | The Git `user.email` used for automatic commits. | no
+| `deepl_api_key`. | **Yes** | - | DeepL API key. Save in repository secret. |
+| `input_file`. | No, sir. | `README.md`. | Path of the source file. |
+| `output_file`. | No, sir. | `README.en.md`. | Output file path of the translation result. |
+| `source_lang`. | No, sir. | `JA`. | The language code of the source language (`JA`, `ZH`, `DE`, etc.). If an empty string is specified, DeepL will auto-detect it. |
+| `target_lang`. | No, sir. | `EN-US`. | The language code of the target language (`EN-US`, `EN-GB`, `FR`, etc.). |
+| `commit_changes`. | No, sir. | `true`. | Whether to automatically commit and push translation files. |
+| `commit_message`. | No, sir. | `docs: update translated README (auto-translated)` | Message at the time of auto-commit. |
+| `commit_user_name`. | No, sir. | `github-actions[bot]` | The Git `user.name` to use for automatic commits. |
+| `commit_user_email`. | No, sir. | `github-actions[bot]@users.noreply.github.com` | The Git `user.email` to use for automatic commits. |
 
 ## setup
 
