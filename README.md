@@ -91,7 +91,7 @@ jobs:
       - uses: k42um/readme-translation@v1
         with:
           deepl_api_key: ${{ secrets.DEEPL_API_KEY }}
+```
 
 ## 備考
 - 途中で言語変更を行なった場合は、元の翻訳後ファイルが残ってしまいます。不要な場合は削除してください。
-```
