@@ -71,4 +71,24 @@ jobs:
 1. [DeepL API](https://www.deepl.com/pro-api)のアカウントを作成してください。（基本無料）
 2. ログイン後、**アカウント → APIキーと制限 → キーを作成**からAPIキーを取得し、コピーしてください。
 3. 使用したいリポジトリにて **Settings → Secrets and variables → Actions → New repository secret** より `DEEPL_API_KEY` という名前でシークレットを追加します。
-4. 上記の例を参照し、使用したいリポジトリにワークフローを作成してください。
+4. リポジトリの`.github/workflows/translate-readme.yml`を作成し、以下のコードをコピーすると、READMEが自動で英訳されるようになります！
+
+```yaml
+name: Translate README
+on:
+  push:
+    branches: main
+    paths: README.md
+  workflow_dispatch:
+
+jobs:
+  translate:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: k42um/readme-translation@v1
+        with:
+          deepl_api_key: ${{ secrets.DEEPL_API_KEY }}
+```
