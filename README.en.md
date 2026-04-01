@@ -1,6 +1,7 @@
 <div align="right"><a href="README.md">🇯🇵 日本語</a></div>
 
 
+
 # readme-translation
 
 Workflow for automatically translating `README.md` into English (or any other language supported by DeepL) using the DeepL API.
@@ -12,19 +13,7 @@ Workflow for automatically translating `README.md` into English (or any other la
 - Free setting of source and target languages
 - Automatic push of translated files to the repository
 
-## treatment
-
-```yaml
-- uses: actions/checkout@v4
-  with:
-    token: ${{ secrets.GITHUB_TOKEN }}
-
-- uses: k42um/readme-translation@v1
-  with:
-    deepl_api_key: ${{ secrets.DEEPL_API_KEY }}
-```
-
-### Overall workflow example
+## examples showing the use (of a word)
 
 ```yaml
 name: Translate README
@@ -46,7 +35,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: kazuma/readme-translation@v1
+      - uses: kazuma/readme-translation@v2
         with:
           deepl_api_key: ${{ secrets.DEEPL_API_KEY }}
           input_file: README.md
@@ -58,7 +47,7 @@ jobs:
 ## option
 
 | Input | Required | Default | Description
-|---|---|---|---|---|
+|---|---|---|---|
 | `deepl_api_key` | **Yes** | - | DeepL API key. Save it in the repository secret. 
 | `input_file` | no | `README.md` | Path of the source file. | no
 | `output_file` | no | `README.en.md` | Output file path of the translation result. | no | `README.en.md` | output file path of translation results.
@@ -67,7 +56,7 @@ jobs:
 | `commit_changes` | No | `true` | Whether to autocommit and push translation files. | no
 | `commit_message` | no | `docs: update translated README (auto-translated)` | Message on auto-commit. | no
 | `commit_user_name` | No | `github-actions[bot]` | The Git `user.name` to use for automatic commits. | no
-| `commit_user_email` | No | `github-actions[bot]@users.noreply.github.com` | The Git `user.email` used for automatic commits. | No
+| `commit_user_email` | No | `github-actions[bot]@users.noreply.github.com` | The Git `user.email` used for automatic commits. | no
 
 ## setup
 
@@ -91,7 +80,7 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v4
-      - uses: k42um/readme-translation@v1
+      - uses: k42um/readme-translation@v2
         with:
           deepl_api_key: ${{ secrets.DEEPL_API_KEY }}
 ```

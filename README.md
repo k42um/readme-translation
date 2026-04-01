@@ -3,6 +3,7 @@
 <!-- ↑ このブロックは readme-translation アクションが自動生成しています。削除しないでください。 -->
 <!-- readme-translation:end -->
 
+
 # readme-translation
 
 DeepL API を使って `README.md` を英語（またはDeepLが対応する任意の言語）に自動翻訳するためのワークフローです。
