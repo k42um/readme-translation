@@ -77,6 +77,10 @@ SKIP_PATTERNS = [
 # Markdown prefix characters preserved during translation
 PREFIX_RE = re.compile(r"^(#{1,6} |\s*[-*+] |\s*\d+\.\s+|\s+)")
 
+# Markdown table separator row: |---|:---:|---| etc.
+TABLE_SEPARATOR_RE = re.compile(r"^\|[\s\-:|]+\|")
+TABLE_ROW_RE = re.compile(r"^\|.*\|")
+
 
 def get_lang_label(lang_code: str) -> str:
     """Return 'FLAG name' for a DeepL language code, or the code itself as fallback."""
@@ -132,6 +136,44 @@ def should_skip(line: str) -> bool:
     return any(p.match(stripped) for p in SKIP_PATTERNS)
 
 
+def translate_table_row(
+    translator: deepl.Translator,
+    line: str,
+    source_lang: str,
+    target_lang: str,
+) -> str:
+    """Translate each cell in a Markdown table row while keeping the | structure intact."""
+    trailing = "\n" if line.endswith("\n") else ""
+    text = line.rstrip("\n")
+
+    # Table separator rows (|---|:---:|) must not be translated
+    if TABLE_SEPARATOR_RE.match(text.strip()):
+        return line
+
+    parts = text.split("|")
+    # parts[0] is before the first |, parts[-1] is after the last |
+    # actual cells are parts[1:-1]
+    src = source_lang if source_lang else None
+    translated_parts = [parts[0]]
+    for cell in parts[1:-1]:
+        stripped = cell.strip()
+        if stripped:
+            try:
+                result = translator.translate_text(stripped, source_lang=src, target_lang=target_lang).text
+                translated_cell = result if result else stripped
+            except Exception as e:
+                print(f"[WARN] Translation failed: {e!r} | cell: {cell!r}", flush=True)
+                translated_cell = stripped
+            # Preserve the original padding spaces around the cell content
+            lead = len(cell) - len(cell.lstrip())
+            trail = len(cell) - len(cell.rstrip())
+            translated_parts.append(" " * lead + translated_cell + " " * trail)
+        else:
+            translated_parts.append(cell)
+    translated_parts.append(parts[-1])
+    return "|".join(translated_parts) + trailing
+
+
 def translate_line(
     translator: deepl.Translator,
     line: str,
@@ -140,6 +182,12 @@ def translate_line(
 ) -> str:
     if should_skip(line):
         return line
+
+    stripped = line.strip()
+
+    # Handle Markdown table rows specially to preserve | structure
+    if TABLE_ROW_RE.match(stripped):
+        return translate_table_row(translator, line, source_lang, target_lang)
 
     trailing = "\n" if line.endswith("\n") else ""
     text = line.rstrip("\n")
