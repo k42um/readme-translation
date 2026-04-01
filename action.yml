@@ -1,0 +1,86 @@
+name: 'README Translation'
+description: 'Translate README.md into English (or any language) using the DeepL API and commit the result.'
+author: 'kazuma'
+branding:
+  icon: 'globe'
+  color: 'blue'
+
+inputs:
+  deepl_api_key:
+    description: 'DeepL API key (Free or Pro). Store this as a repository secret.'
+    required: true
+  input_file:
+    description: 'Path to the source README file.'
+    required: false
+    default: 'README.md'
+  output_file:
+    description: 'Path for the translated output file.'
+    required: false
+    default: 'README.en.md'
+  source_lang:
+    description: 'Source language code (e.g. JA, ZH, DE). Leave blank to let DeepL auto-detect.'
+    required: false
+    default: 'JA'
+  target_lang:
+    description: 'Target language code (e.g. EN-US, EN-GB, FR).'
+    required: false
+    default: 'EN-US'
+  commit_changes:
+    description: 'Commit and push the translated file automatically.'
+    required: false
+    default: 'true'
+  commit_message:
+    description: 'Git commit message used when committing the translated file.'
+    required: false
+    default: 'docs: update translated README (auto-translated)'
+  commit_user_name:
+    description: 'Git user.name for the auto-commit.'
+    required: false
+    default: 'github-actions[bot]'
+  commit_user_email:
+    description: 'Git user.email for the auto-commit.'
+    required: false
+    default: 'github-actions[bot]@users.noreply.github.com'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.x'
+
+    - name: Install deepl
+      shell: bash
+      run: pip install deepl
+
+    - name: Translate README
+      shell: bash
+      env:
+        DEEPL_API_KEY: ${{ inputs.deepl_api_key }}
+        INPUT_FILE: ${{ inputs.input_file }}
+        OUTPUT_FILE: ${{ inputs.output_file }}
+        SOURCE_LANG: ${{ inputs.source_lang }}
+        TARGET_LANG: ${{ inputs.target_lang }}
+      run: |
+        python "${{ github.action_path }}/scripts/translate_readme.py" \
+          --input  "$INPUT_FILE" \
+          --output "$OUTPUT_FILE" \
+          --source-lang "$SOURCE_LANG" \
+          --target-lang "$TARGET_LANG"
+
+    - name: Commit and push
+      if: inputs.commit_changes == 'true'
+      shell: bash
+      env:
+        INPUT_FILE: ${{ inputs.input_file }}
+        OUTPUT_FILE: ${{ inputs.output_file }}
+        COMMIT_MESSAGE: ${{ inputs.commit_message }}
+        COMMIT_USER_NAME: ${{ inputs.commit_user_name }}
+        COMMIT_USER_EMAIL: ${{ inputs.commit_user_email }}
+      run: |
+        git config user.name  "$COMMIT_USER_NAME"
+        git config user.email "$COMMIT_USER_EMAIL"
+        git add "$INPUT_FILE" "$OUTPUT_FILE"
+        git diff --staged --quiet && echo "No changes to commit." || \
+          ( git commit -m "$COMMIT_MESSAGE" && git push )
