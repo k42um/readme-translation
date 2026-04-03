@@ -5,6 +5,7 @@
 
 
 
+
 # readme-translation
 
 DeepL API を使って `README.md` を英語（またはDeepLが対応する任意の言語）に自動翻訳するためのワークフローです。
