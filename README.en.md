@@ -4,6 +4,7 @@
 
 
 
+
 # readme-translation
 
 Workflow for automatically translating `README.md` into English (or any other language supported by DeepL) using the DeepL API.
@@ -37,7 +38,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: kazuma/readme-translation@v1
+      - uses: k42um/readme-translation@v1
         with:
           deepl_api_key: ${{ secrets.DEEPL_API_KEY }}
           input_file: README.md
