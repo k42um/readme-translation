@@ -39,7 +39,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: kazuma/readme-translation@v1
+      - uses: k42um/readme-translation@v1
         with:
           deepl_api_key: ${{ secrets.DEEPL_API_KEY }}
           input_file: README.md
