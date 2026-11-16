@@ -5,18 +5,19 @@
 
 
 
+
 # readme-translation
 
-Workflow for automatically translating `README.md` into English (or any other language supported by DeepL) using the DeepL API.
+This is a workflow for automatically translating `README.md` into English (or any language supported by DeepL) using the DeepL API.
 
-## feature
+## Features
 
-- Translation using [DeepL API](https://www.deepl.com/pro-api)
-- Preserves Markdown formatting for headings, lists, code blocks, images, badges, etc.
-- Free setting of source and target languages
-- Automatic push of translated files to the repository
+- Translation using the [DeepL API](https://www.deepl.com/pro-api)
+- Preserves Markdown formatting such as headings, lists, code blocks, images, and badges
+- You can freely set the source and target languages for translation
+- Automatically push translated files to the repository
 
-## examples showing the use (of a word)
+## Examples of Use
 
 ```yaml
 name: Translate README
@@ -47,26 +48,28 @@ jobs:
           target_lang: EN-US
 ```
 
-## option
+## Options
 
-| input | indispensable | default | Description. |
+| Input | Required | Default | Description |
 |---|---|---|---|
-| `deepl_api_key`. | **Yes** | - | DeepL API key. Save in repository secret. |
-| `input_file`. | No, sir. | `README.md`. | Path of the source file. |
-| `output_file`. | No, sir. | `README.en.md`. | Output file path of the translation result. |
-| `source_lang`. | No, sir. | `JA`. | The language code of the source language (`JA`, `ZH`, `DE`, etc.). If an empty string is specified, DeepL will auto-detect it. |
-| `target_lang`. | No, sir. | `EN-US`. | The language code of the target language (`EN-US`, `EN-GB`, `FR`, etc.). |
-| `commit_changes`. | No, sir. | `true`. | Whether to automatically commit and push translation files. |
-| `commit_message`. | No, sir. | `docs: update translated README (auto-translated)` | Message at the time of auto-commit. |
-| `commit_user_name`. | No, sir. | `github-actions[bot]` | The Git `user.name` to use for automatic commits. |
-| `commit_user_email`. | No, sir. | `github-actions[bot]@users.noreply.github.com` | The Git `user.email` to use for automatic commits. |
+| `deepl_api_key` | **Yes** | — | DeepL API key. Please save this in your repository's secrets. |
+| `input_file` | No | `README.md` | The path to the source file. |
+| `output_file` | No | `README.en.md` | The output file path for the translation results. |
+| `source_lang` | No | `JA` | Source language code (`JA`, `ZH`, `DE`, etc.). If you specify an empty string, DeepL will detect it automatically. |
+| `target_lang` | No | `EN-US` | The target language code (`EN-US`, `EN-GB`, `FR`, etc.). |
+| `commit_changes` | No | `true` | Whether to automatically commit and push translation files. |
+| `commit_message` | No | `docs: Update the translated README (auto-translated)` | Message displayed during an automatic commit. |
+| `commit_user_name` | No | `github-actions[bot]` | The Git `user.name` used for auto-commits. |
+| `commit_user_email` | No | `github-actions[bot]@users.noreply.github.com` | The Git `user.email` used for auto-commits. |
 
-## setup
+For the language codes that can be specified for `source_lang` and `target_lang`, please refer to the [DeepL official list of supported languages](https://developers.deepl.com/docs/getting-started/supported-languages).
 
-1. Create an account on [DeepL API](https://www.deepl.com/pro-api). (basically free of charge)
-2. After logging in, go to **Account → API Keys and Restrictions → Create Key** to obtain your API key and copy it.
-3. In the repository you wish to use, go to **Settings → Secrets and variables → Actions → New repository secret** and add a secret named `DEEPL_API_KEY`.
-4. Create a repository `.github/workflows/translate-readme.yml` and copy the following code so that the README will be automatically translated into English! (If you want to customize it, please refer to the examples and options above.)
+## Setup
+
+1. Please create an account for the [DeepL API](https://www.deepl.com/pro-api). (Basic service is free.)
+2. After logging in, go to **Account → API Keys and Limits → Create Key** to retrieve your API key, then copy it.
+3. In the repository you want to use, go to **Settings → Secrets and variables → Actions → New repository secret** and add a secret named `DEEPL_API_KEY`.
+4. Create a `.github/workflows/translate-readme.yml` file in your repository and copy the code below to automatically translate your README into English! (If you want to customize it, refer to the example and options above.)
 
 ```yaml
 name: Translate README
@@ -88,8 +91,8 @@ jobs:
           deepl_api_key: ${{ secrets.DEEPL_API_KEY }}
 ```
 
-## remarks
-- If you change the language during the process, the original translated file will remain. If you do not need it, please delete it.
+## Notes
+- If you change the language partway through, the original translated file will remain. Please delete it if you no longer need it.
 
 ---
 *This file was automatically generated by machine translation from [README.md](README.md).*
