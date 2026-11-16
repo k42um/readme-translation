@@ -72,10 +72,11 @@ SKIP_PATTERNS = [
     re.compile(r"^!\["),        # image
     re.compile(r"^\[!\["),      # badge link
     re.compile(r"^https?://"),  # bare URL
+    re.compile(r"^>\s+\[!(?:NOTE|TIP|IMPORTANT|WARNING|CAUTION)\]$"),  # GitHub alert marker
 ]
 
 # Markdown prefix characters preserved during translation
-PREFIX_RE = re.compile(r"^(#{1,6} |\s*[-*+] |\s*\d+\.\s+|\s+)")
+PREFIX_RE = re.compile(r"^(#{1,6} |\s*[-*+] |\s*\d+\.\s+|\s*(?:>\s*)+|\s+)")
 
 # Markdown table separator row: |---|:---:|---| etc.
 TABLE_SEPARATOR_RE = re.compile(r"^\|[\s\-:|]+\|")
