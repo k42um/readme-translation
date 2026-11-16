@@ -63,6 +63,8 @@ jobs:
 | `commit_user_name` | いいえ | `github-actions[bot]` | 自動コミットに使用する Git の `user.name`。 |
 | `commit_user_email` | いいえ | `github-actions[bot]@users.noreply.github.com` | 自動コミットに使用する Git の `user.email`。 |
 
+`source_lang` と `target_lang` に指定できる言語コードは、[DeepL公式の対応言語一覧](https://developers.deepl.com/docs/getting-started/supported-languages)を参照してください。
+
 ## セットアップ
 
 1. [DeepL API](https://www.deepl.com/pro-api)のアカウントを作成してください。（基本無料）
